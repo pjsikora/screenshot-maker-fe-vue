@@ -1,14 +1,13 @@
-<template>
-    <p>This is list!</p>
-    <ul>
-        <li v-for="(index, item) in items">
-            {{ item }}
-        </li>
-    </ul>
+<template lang="jade">
+    p This is list!
+    ul
+        li(v-for="(index, item) in items") {{ item }}
 </template>
+
 <style>
 
 </style>
+
 <script>
     import Vue from 'vue';
 
@@ -24,8 +23,7 @@
             fetchFiles: function() {
                 Vue.http.get('http://localhost:8888/list').then((response) => {
                     var res = JSON.parse(response.body);
-                this.$set('items', res.files);
-
+                    this.items = res.files;
             }, (response) => {
                     console.log(response);
                 });

@@ -1,19 +1,16 @@
-<template>
-    <p>This is screenshotmaker!</p>
-    <div v-if="form">
-        <input v-model="url" placeholder="URL" />
-        <button v-on:click="makeScreenshot">Make screenshot</button>
-    </div>
-    <div v-if="error">
-        <p>Error</p>
-    </div>
-    <div v-if="success">
-        <p>Screenshot done!</p>
-    </div>
-    <div v-if="inprogresss">
-        <p>In progress</p>
-    </div>
+<template lang="jade">
+    p This is screenshotmaker!
+    div(v-if="form")
+        input(v-model="url", placeholder="URL")
+        button(v-on:click="makeScreenshot") Make screenshot
+    div(v-if="error")
+        p Error
+    div(v-if="success")
+        p Screenshot done!
+    div(v-if="inprogress")
+        p In progress
 </template>
+
 
 <style>
 </style>
@@ -27,23 +24,22 @@
                 form: true,
                 error: false,
                 success: false,
-                inprogresss: false,
+                inprogress: false,
                 url: ''
             }
         },
         methods: {
             makeScreenshot: function(e) {
-                this.$set('form', false);
-                this.$set('inprogresss', true);
-
+                this.form = false;
+                this.inprogress = true;
 
                 Vue.http.get('http://localhost:8888/screenshot?url='+this.url).then((response) => {
                     var res = JSON.parse(response.body);
-                    this.$set('success', true);
-                    this.$set('inprogresss', false);
+                    this.success = true;
+                    this.inprogress = false;
                 }, (response) => {
-                    this.$set('error', true);
-                    this.$set('inprogresss', false);
+                    this.error = true;
+                    this.inprogress = false;
                 });
             }
         }
